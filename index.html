@@ -230,7 +230,7 @@ $('prefs').addEventListener('input',change);$('prefs').addEventListener('submit'
 function start(raw){dataRaw=raw;const arr=Array.isArray(raw)?raw:raw.locations;locs=(arr||[]).filter(x=>x.city&&x.country).map((x,i)=>({...x,id:String(x.id??i),airport:x.airport??x.iata??null}));
  const dataCities=locs.filter(x=>x.airport).map(x=>[x.city+' ('+x.airport+')',x.city]);for(const [name] of dataCities){const o=make('option');o.value=name;$('airports').append(o)}
  mapInit();refreshSources();render();
-fetch('rent-overlay.json?v=20261120').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
+fetch('rent-overlay.json?v=20261120-23').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
 }
 function refreshSources(){const raw=dataRaw;if(!raw)return;const tempCount=locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length,rainCount=locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length;
  const src=$('sources');src.textContent=lang==='es'?'Las ubicaciones son aproximadas. El mapa base se simplificó para facilitar la orientación. '+tempCount+' de '+locs.length+' destinos tienen datos de temperatura y '+rainCount+' de precipitación. ':'City points are approximate; simplified basemap for orientation. '+locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length+' of '+locs.length+' have sourced temperature; '+locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length+' have sourced precipitation. ';
