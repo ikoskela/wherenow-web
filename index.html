@@ -97,7 +97,6 @@ addZone('@browser','My browser time zone');for(const [value,label] of zoneNames)
 $('month').value=defaultMonth(); const stored=read('wherenow-prefs-v1',{});if(typeof stored.offset==='string'&&stored.offset!==''&&num(stored.offset)!==null)addZone(stored.offset,'Previous fixed time reference');
 if(!Object.prototype.hasOwnProperty.call(stored,'offset')) $('offset').value='@browser';
 filters.forEach(k=>{if(typeof stored[k]==='string')$(k).value=stored[k]});if(!$('month').value)$('month').value=defaultMonth();
-if(read('wherenow-rent-ux-v1',false)!==true){if(num($('rent').value)!==null||num($('living').value)!==null){$('onlyComplete').checked=false;save('wherenow-complete-v1',false);}save('wherenow-rent-ux-v1',true);}
 function airportCode(v){const a=String(v??'').trim();if(/^[a-z]{3}$/i.test(a))return a.toUpperCase();const found=locs.find(x=>clean(x.city)===clean(a)||clean(x.city+' ('+x.airport+')')===clean(a));return found?.airport||null}
 function tripDates(){return [$('depart').value,$('direction').value==='round'?$('return').value:''];}
 function routeKey(x){const a=airportCode($('airport').value),b=airportCode(x.airport);return !a||!b||a===b?null:[a,b,$('direction').value,$('month').value||defaultMonth(),...tripDates()].join('|')}
@@ -227,7 +226,7 @@ function change(){const a=num($('minTemp').value),b=num($('maxTemp').value);$('m
 function refreshFlightForm(){const round=$('direction').value==='round';$('returnField').hidden=!round;$('return').disabled=!round;$('return').min=$('depart').value;$('includeFares').disabled=num($('fare').value)===null;}
 $('flightPrefs').addEventListener('input',()=>{save('wherenow-fare-ranking-v1',$('includeFares').checked);refreshFlightForm();change();});
 $('flightPrefs').addEventListener('submit',e=>e.preventDefault());refreshFlightForm();
-$('prefs').addEventListener('input',e=>{if(['rent','living'].includes(e.target?.id)&&$('onlyComplete').checked){$('onlyComplete').checked=false;save('wherenow-complete-v1',false);}change();});$('prefs').addEventListener('submit',e=>e.preventDefault());$('search').addEventListener('input',render);$('reset').onclick=()=>{$('prefs').reset();$('flightPrefs').reset();$('includeFares').checked=false;save('wherenow-fare-ranking-v1',false);refreshFlightForm();$('onlyComplete').checked=false;save('wherenow-complete-v1',false);$('sort').value='match';$('month').value=defaultMonth();$('search').value='';selected=null;setView([0,0,1000,490]);change();};
+$('prefs').addEventListener('input',change);$('prefs').addEventListener('submit',e=>e.preventDefault());$('search').addEventListener('input',render);$('reset').onclick=()=>{$('prefs').reset();$('flightPrefs').reset();$('includeFares').checked=false;save('wherenow-fare-ranking-v1',false);refreshFlightForm();$('onlyComplete').checked=false;save('wherenow-complete-v1',false);$('sort').value='match';$('month').value=defaultMonth();$('search').value='';selected=null;setView([0,0,1000,490]);change();};
 function start(raw){dataRaw=raw;const arr=Array.isArray(raw)?raw:raw.locations;locs=(arr||[]).filter(x=>x.city&&x.country).map((x,i)=>({...x,id:String(x.id??i),airport:x.airport??x.iata??null}));
  const dataCities=locs.filter(x=>x.airport).map(x=>[x.city+' ('+x.airport+')',x.city]);for(const [name] of dataCities){const o=make('option');o.value=name;$('airports').append(o)}
  mapInit();refreshSources();render();
