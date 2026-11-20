@@ -5,13 +5,13 @@
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
-    "destinationCount": 214,
+    "destinationCount": 216,
     "withPublishedRentReference": 66,
-    "withoutPublishedRentReference": 148,
+    "withoutPublishedRentReference": 150,
     "withPublishedMonthlyTotal": 0,
-    "withOtherComparableBenchmarksOnly": 66,
-    "withAnyPublishedRentBenchmark": 132,
-    "withNoPublishedRentBenchmark": 82
+    "withOtherComparableBenchmarksOnly": 67,
+    "withAnyPublishedRentBenchmark": 133,
+    "withNoPublishedRentBenchmark": 83
   },
   "records": [
     {
@@ -4262,6 +4262,29 @@
             "url": "https://tulugar.com/es/datos"
           },
           "method": "Latest published monthly median monthly asking price meeting 10 average active listings. Already quoted in USD by TuLugar. Not a signed lease or standardized furnished rental."
+        }
+      }
+    },
+    {
+      "id": "bolivia-santa-cruz-de-la-sierra",
+      "status": "matched",
+      "rent": {
+        "rentCity1brAskingContextUsd": {
+          "usd": 330,
+          "asOf": "2026-11-01",
+          "sourceId": "Hogaria · one-bedroom apartment asking median",
+          "sourceUrl": "https://hogaria.com/propiedades/en-alquiler/santa-cruz-de-la-sierra/departamentos",
+          "kind": "one_bedroom_asking_median_context_only_not_dated_furnished_stay",
+          "listingCount": 296,
+          "localAmount": 3990,
+          "currency": "BOB",
+          "scope": "Santa Cruz de la Sierra, city; one-bedroom apartment ads",
+          "method": "November 1 snapshot; USD conversion at the source snapshot rate of 12.09 BOB/USD. Asking rents, not signed leases; does not establish furnishing, one-month terms, fees or January availability.",
+          "fx": {
+            "asOf": "2026-11-01",
+            "localPerUsd": 12.09,
+            "sourceUrl": "https://hogaria.com/propiedades/en-alquiler/santa-cruz-de-la-sierra/departamentos"
+          }
         }
       }
     }
