@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import {strict as assert} from 'node:assert';
+import {validateFareRequest,fareSearch} from './fare-handler.mjs';
+const good={origin:'ASU',destination:'SCL',departureDate:'2027-01-15',returnDate:'2027-03-15',adults:1,currency:'USD'};
+test('valid request',()=>assert.equal(validateFareRequest(good,'2026-11-20').origin,'ASU'));
+test('reject invalid airport',()=>assert.throws(()=>validateFareRequest({...good,origin:'ASUNCION'},'2026-11-20')));
+test('reject date order',()=>assert.throws(()=>validateFareRequest({...good,returnDate:'2027-01-14'},'2026-11-20')));
+test('reject bad calendar date',()=>assert.throws(()=>validateFareRequest({...good,departureDate:'2027-02-30'},'2026-11-20')));
+test('unavailable by default',async()=>assert.equal((await fareSearch(good,{today:'2026-11-20'})).httpStatus,503));
+test('hard quota',async()=>assert.equal((await fareSearch(good,{today:'2026-11-20',authorized:true,quota:{reserve:async()=>false},provider:{search:async()=>[]}})).httpStatus,429));
+test('invalid offers excluded',async()=>{const r=await fareSearch(good,{today:'2026-11-20',authorized:true,quota:{reserve:async()=>true},provider:{search:async()=>[{totalUsd:0,currency:'USD'},{totalUsd:410,currency:'USD',stops:2}]}});assert.equal(r.body.offers.length,1);assert.equal(r.body.offers[0].totalUsd,410)});
