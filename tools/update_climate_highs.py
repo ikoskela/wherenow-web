@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Sequential NASA POWER climatology enrichment with per-city diagnostics.
-Processes up to BATCH_SIZE missing destinations per run, one request at a time.
+Processes all missing destinations per run, one request at a time, with per-city diagnostics.
 Only writes sourced values; persists failure diagnostics for follow-up runs.
 """
 import datetime,json,os,time,urllib.error,urllib.parse,urllib.request
 from pathlib import Path
 BASE='https://power.larc.nasa.gov/api/temporal/climatology/point'
 MONTHS=('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC')
-BATCH_SIZE=max(1,min(20,int(os.environ.get('CLIMATE_BATCH_SIZE','5'))))
+BATCH_SIZE=max(1,min(208,int(os.environ.get('CLIMATE_BATCH_SIZE','208'))))
 def valid(city):
  m=city.get('months',[])
  return len(m)==12 and all(isinstance(v.get('highC'),(int,float)) and -75<v['highC']<65 for v in m)
