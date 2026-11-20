@@ -48,7 +48,7 @@ def main():
  # Preserve all existing verified highs; never replace failures with estimates.
  if successes==0 and futures:
   raise RuntimeError('No successful NASA POWER requests; no file changed. First errors: '+repr(errors[:4]))
- p.write_text(json.dumps(raw,ensure_ascii=False,separators=(',',':'))+'\\n')
+ p.write_text(json.dumps(raw,ensure_ascii=False,separators=(',',':'))+chr(10))
  print(json.dumps({'locations':len(cities),'updated':successes,'complete':sum(len(c.get('months',[]))==12 and all(isinstance(m.get('highC'),(int,float)) for m in c['months']) for c in cities),'unavailable':len(errors),'errors':errors}))
 
 if __name__=='__main__':main()
