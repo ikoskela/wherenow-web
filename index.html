@@ -212,10 +212,10 @@ const outlines=[
 ];
 function mapInit(){if(mapDrawn)return;mapDrawn=true;const m=$('map');for(let la=-60;la<=60;la+=30){const [_,y]=project(0,la);m.append(svg('line',{x1:16,y1:y,x2:984,y2:y,stroke:'#cad9d1','stroke-dasharray':'3 5'}))}for(let lo=-150;lo<=150;lo+=30){const [x]=project(lo,0);m.append(svg('line',{x1:x,y1:16,x2:x,y2:466,stroke:'#cad9d1','stroke-dasharray':'3 5'}))}const bg=svg('g',{id:baseId,'aria-hidden':'true'});outlines.forEach(a=>bg.append(svg('polygon',{points:a.map(([lon,lat])=>project(lon,lat).join(',')).join(' '),fill:'#c7d7cc',stroke:'#a9c1b3','stroke-width':1.15})));m.append(bg);mapPoints=svg('g',{id:'markers'});m.append(mapPoints);}
 function setView(next){viewport=next;$('map').setAttribute('viewBox',next.join(' '));}
-function scaleView(factor){const [x,y,w,h]=viewport, nw=Math.min(1000,Math.max(190,w*factor)),nh=nw*.49;setView([Math.min(1000-nw,Math.max(0,x+(w-nw)/2)),Math.min(490-nh,Math.max(0,y+(h-nh)/2)),nw,nh]);}
+function scaleView(factor){const [x,y,w,h]=viewport, nw=Math.min(1000,Math.max(8,w*factor)),nh=nw*.49;setView([Math.min(1000-nw,Math.max(0,x+(w-nw)/2)),Math.min(490-nh,Math.max(0,y+(h-nh)/2)),nw,nh]);}
 $('zoomout').onclick=()=>scaleView(1.45);$('zoomin').onclick=()=>scaleView(.69);$('world').onclick=()=>setView([0,0,1000,490]);
 function clampMap(x,y,w){const h=w*.49;return [Math.min(1000-w,Math.max(0,x)),Math.min(490-h,Math.max(0,y)),w,h]}
-function zoomAnchor(initial,from,to,ratio){const [x,y,w,h]=initial,nw=Math.min(1000,Math.max(190,w*ratio)),nh=nw*.49;return clampMap(x+w*from[0]-nw*to[0],y+h*from[1]-nh*to[1],nw);}
+function zoomAnchor(initial,from,to,ratio){const [x,y,w,h]=initial,nw=Math.min(1000,Math.max(8,w*ratio)),nh=nw*.49;return clampMap(x+w*from[0]-nw*to[0],y+h*from[1]-nh*to[1],nw);}
 function mapFraction(point,rect){const w=Math.min(rect.width,rect.height/.49),h=w*.49;return [(point.x-rect.left-(rect.width-w)/2)/w,(point.y-rect.top-(rect.height-h)/2)/h];}
 function midpoint(a,b){return {x:(a.x+b.x)/2,y:(a.y+b.y)/2};}
 function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y);}
@@ -228,7 +228,8 @@ gestureMap.addEventListener('pointermove',e=>{if(!fingers.has(e.pointerId)||!ges
 function finishGesture(e){if(!fingers.has(e.pointerId))return;const wasActive=!!gesture?.active;fingers.delete(e.pointerId);if(wasActive)blockClickUntil=Date.now()+650;if(fingers.size)snapshotGesture(wasActive);else{gesture=null;gestureMap.classList.remove('is-dragging');}}
 gestureMap.addEventListener('pointerup',finishGesture);gestureMap.addEventListener('pointercancel',finishGesture);gestureMap.addEventListener('lostpointercapture',e=>{if(e.target===gestureMap)finishGesture(e);});gestureMap.addEventListener('pointerleave',e=>{if(!gesture?.active)finishGesture(e);});
 gestureMap.addEventListener('click',e=>{if(e.detail!==0&&Date.now()<blockClickUntil){e.preventDefault();e.stopImmediatePropagation();}},true);
-gestureMap.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();const f=mapFraction(eventPoint(e),gestureMap.getBoundingClientRect());setView(zoomAnchor(viewport,f,f,e.deltaY>0?1.2:.83));},{passive:false});
+gestureMap.addEventListener('wheel',e=>{e.preventDefault();const f=mapFraction(eventPoint(e),gestureMap.getBoundingClientRect());setView(zoomAnchor(viewport,f,f,e.deltaY>0?1.2:.83));},{passive:false});
+gestureMap.addEventListener('dblclick',e=>{e.preventDefault();const f=mapFraction(eventPoint(e),gestureMap.getBoundingClientRect());setView(zoomAnchor(viewport,f,f,.55));});
 
 function fitLabel(a){const base=tr(a.neutral?'No limits':a.color==='gray'?'No data':states[a.color]);return a.provisional?tr('Provisional')+' · '+base:base;}
 function fitClass(a){return 'status '+a.color+(a.provisional?' provisional':a.neutral?' neutral':'');}
@@ -310,6 +311,7 @@ function change(){const a=num($('minTemp').value),b=num($('maxTemp').value);$('m
 $('prefs').addEventListener('input',change);$('prefs').addEventListener('submit',e=>e.preventDefault());$('search').addEventListener('input',render);$('reset').onclick=()=>{$('prefs').reset();save('wherenow-air-unknown-v1',false);$('onlyComplete').checked=false;save('wherenow-complete-v1',false);$('sort').value='match';$('month').value=defaultMonth();$('search').value='';selected=null;setView([0,0,1000,490]);change();};
 function start(raw){dataRaw=raw;const arr=Array.isArray(raw)?raw:raw.locations;locs=(arr||[]).filter(x=>x.city&&x.country).map((x,i)=>({...x,id:String(x.id??i),airport:x.airport??x.iata??null}));
  mapInit();refreshSources();render();
+fetch('humidity-overlay.json?v=1').then(r=>r.ok?r.json():null).then(o=>{if(o?.schemaVersion===1&&o.parameter==='RH2M'&&o.records){let changed=0;for(const x of locs){const entry=o.records[x.id];if(!entry||!Array.isArray(entry.months)||entry.months.length!==12)continue;for(let i=0;i<12;i++){const v=entry.months[i];if(typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=100&&x.months?.[i]){x.months[i].humidityPct=v;changed++;}}}if(changed)render();}).catch(()=>{});
 fetch('airport-access.json?v=20261120-airport').then(r=>r.ok?r.json():null).then(a=>{if(a?.schemaVersion===1&&a.records&&a.airports)airportData=a;}).catch(()=>{}).finally(()=>{airportLoading=false;render();});
 fetch('rent-overlay.json?v=20261120-coverage-r3').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
 }
