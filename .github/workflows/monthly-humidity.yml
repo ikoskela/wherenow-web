@@ -1,0 +1,46 @@
+name: Refresh monthly humidity (NASA POWER)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/monthly-humidity.yml'
+permissions:
+  contents: write
+concurrency:
+  group: wherenow-humidity-overlay
+  cancel-in-progress: false
+jobs:
+  humidity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch verified NASA POWER RH2M climate normals for every destination
+        run: python scripts/build_humidity_overlay.py
+      - name: Validate resulting sidecar
+        run: |
+          python - <<'PY'
+          import json
+          cities=json.load(open('data.json'))
+          if isinstance(cities,dict): cities=cities['locations']
+          x=json.load(open('humidity-overlay.json'))
+          assert x['schemaVersion']==1 and x['parameter']=='RH2M'
+          assert x['cityCount']==len(cities)
+          assert x['completeCityCount']+x['missingCityCount']==len(cities)
+          for id,record in x['records'].items():
+              assert len(record['months'])==12 and record['source'].startswith('https://power.larc.nasa.gov/')
+              assert all(0<=v<=100 for v in record['months'])
+          print(x['completeCityCount'], '/',len(cities),' cities complete')
+          PY
+      - name: Commit only sourced humidity overlay, never other climate data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- humidity-overlay.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh NASA POWER monthly RH2M humidity overlay'
+            git push
+          fi
