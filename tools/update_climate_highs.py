@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Sequential NASA POWER climatology enrichment with per-city diagnostics.
-Processes one missing destination per invocation when CLIMATE_BATCH_SIZE=1; workflow commits each result.
+Processes missing destinations serially; writes one validated dataset and diagnostic summary per batch.
 Only writes sourced values; persists failure diagnostics for follow-up runs.
 """
 import datetime,json,os,time,urllib.error,urllib.parse,urllib.request
@@ -45,7 +45,19 @@ def main():
   else:result,error=fetch(city)
   if result:
    values,url=result
-   for month,value in zip(city['months'],values):month['highC']=value
+   existing=city.get('months')
+   if existing is None or existing==[]:
+    existing=[{} for _ in MONTHS]
+    city['months']=existing
+   if not isinstance(existing,list) or len(existing)!=12 or not all(isinstance(month,dict) for month in existing):
+    prev=failures.get(city['id'],{})
+    failures[city['id']]={'attempts':prev.get('attempts',0)+1,'lastAttempt':now,'error':{'reason':'invalid_dataset_month_shape'}}
+    print('FAILED',city['id'],'invalid_dataset_month_shape',flush=True)
+    continue
+   for month,value in zip(existing,values):
+    old=month.get('highC')
+    if isinstance(old,bool) or not isinstance(old,(int,float)) or not -75<old<65:
+     month['highC']=value
    city['highTempSource']=url
    city['highTempNote']='NASA POWER 1991–2020 T2M_MAX_AVG gridded climatology; monthly average of daily maxima, not a forecast.'
    failures.pop(city['id'],None);success+=1
