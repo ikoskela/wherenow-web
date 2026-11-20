@@ -16,7 +16,7 @@ def fetch(city):
  url=BASE+'?'+urllib.parse.urlencode(params)
  req=urllib.request.Request(url,headers={'User-Agent':'WhereNowClimate/1.1 (public-source-enrichment)','Accept':'application/json'})
  try:
-  with urllib.request.urlopen(req,timeout=45) as response:
+  with urllib.request.urlopen(req,timeout=18) as response:
    status=response.status
    raw=json.load(response)
   series=raw['properties']['parameter']['T2M_MAX_AVG']
