@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "publicationAllowed": true,
-  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record.",
+  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only.",
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
     "destinationCount": 210,
-    "withPublishedRentReference": 65,
-    "withoutPublishedRentReference": 145,
+    "withPublishedRentReference": 66,
+    "withoutPublishedRentReference": 144,
     "withPublishedMonthlyTotal": 0,
-    "withOtherComparableBenchmarksOnly": 64,
-    "withAnyPublishedRentBenchmark": 129,
-    "withNoPublishedRentBenchmark": 81
+    "withOtherComparableBenchmarksOnly": 65,
+    "withAnyPublishedRentBenchmark": 131,
+    "withNoPublishedRentBenchmark": 79
   },
   "records": [
     {
@@ -3106,6 +3106,39 @@
       }
     },
     {
+      "id": "kenya-nairobi",
+      "status": "matched",
+      "sourceCity": "Nairobi",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 585,
+          "asOf": "2026-10",
+          "sourceId": "Kenya Property Centre Rent Index · October 2026 one-bedroom flat asking median (CC BY 4.0)",
+          "sourceUrl": "https://kenyapropertycentre.com/market-trends/average-prices/for-rent/flats-apartments/nairobi?bedrooms=1#release-2026-10",
+          "kind": "one_bedroom_apartment_asking_median_not_furnished_quote",
+          "listingCount": 458,
+          "scope": "Nairobi, publisher city/county area; one-bedroom flats/apartments",
+          "license": {
+            "name": "CC BY 4.0",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          "sourceCurrency": "KES",
+          "sourceMedian": 76100,
+          "sourceIqr": [
+            60000,
+            120500
+          ],
+          "fx": {
+            "localPerUsd": 129.99,
+            "date": "2026-11-19",
+            "source": "Central Bank of Kenya",
+            "url": "https://www.centralbank.go.ke/new-rates/"
+          },
+          "method": "Monthly asking-rent median from 458 archived listings, reconstructed by Kenya Property Centre and released November 4, 2026. WhereNow converted KES to USD and rounded to the dollar. Not a signed lease, a standardized furnished quote, or a seasonal forecast."
+        }
+      }
+    },
+    {
       "id": "mongolia-ulaanbaatar",
       "status": "matched",
       "rent": {
@@ -3657,6 +3690,36 @@
       },
       "atlasDistanceKm": 0,
       "sourceCity": "Ponta Delgada (Azores)"
+    },
+    {
+      "id": "saudi-arabia-jeddah",
+      "status": "matched",
+      "sourceCity": "Jeddah",
+      "rent": {
+        "rentRegisteredContractIndexUsd": {
+          "usd": 544,
+          "asOf": "2026-Q1",
+          "sourceId": "REGA Rent Index via Kite Property Index · Jeddah registered-rent index (Saudi Open Data License v2.0)",
+          "sourceUrl": "https://kite.sa/en/market/jeddah",
+          "kind": "mixed_size_registered_rent_chained_index_not_one_bedroom_quote",
+          "contractCount": 107543,
+          "scope": "Jeddah neighborhood-matched Ejar contracts; not a one-bedroom-only series",
+          "license": {
+            "name": "Saudi Open Data License v2.0",
+            "url": "https://open.data.gov.sa/en/pages/policies/license"
+          },
+          "attribution": "Derived from REGA's مؤشر الايجار on the Saudi Open Data Portal. Data by Kite (Bassel Koshak, Kite Property Index, 2026). WhereNow converted the annual index level in SAR to monthly USD and rounded it.",
+          "sourceCurrency": "SAR",
+          "sourceAnnualIndex": 24473,
+          "fx": {
+            "localPerUsd": 3.75,
+            "source": "Saudi Central Bank, official USD peg",
+            "url": "https://www.sama.gov.sa/en-US/MediaCenter/News/Pages/news-557.aspx"
+          },
+          "method": "Kite's Q1 2026 chained index is anchored to a contract-weighted mean, then adjusted on matched neighborhoods. Not a plain citywide median, asking price, furnished rate, or seasonal quote.",
+          "methodSourceUrl": "https://kite.sa/en/market/methodology"
+        }
+      }
     },
     {
       "id": "singapore-singapore",
