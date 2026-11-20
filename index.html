@@ -211,7 +211,8 @@ const outlines=[
 [[-9,51],[-6,58],[-2,59],[1,51],[-4,50]],[[-25,64],[-22,67],[-14,66],[-14,64]], [[-180,-76],[-145,-74],[-102,-73],[-72,-69],[-62,-62],[-52,-66],[-42,-74],[-15,-72],[37,-69],[78,-67],[102,-66],[144,-69],[180,-72],[180,-90],[-180,-90]]
 ];
 function mapInit(){if(mapDrawn)return;mapDrawn=true;const m=$('map');for(let la=-60;la<=60;la+=30){const [_,y]=project(0,la);m.append(svg('line',{x1:16,y1:y,x2:984,y2:y,stroke:'#cad9d1','stroke-dasharray':'3 5'}))}for(let lo=-150;lo<=150;lo+=30){const [x]=project(lo,0);m.append(svg('line',{x1:x,y1:16,x2:x,y2:466,stroke:'#cad9d1','stroke-dasharray':'3 5'}))}const bg=svg('g',{id:baseId,'aria-hidden':'true'});outlines.forEach(a=>bg.append(svg('polygon',{points:a.map(([lon,lat])=>project(lon,lat).join(',')).join(' '),fill:'#c7d7cc',stroke:'#a9c1b3','stroke-width':1.15})));m.append(bg);mapPoints=svg('g',{id:'markers'});m.append(mapPoints);}
-function setView(next){viewport=next;$('map').setAttribute('viewBox',next.join(' '));}
+function resizeMarkers(){if(!mapPoints)return;const scale=viewport[2]/1000;for(const dot of mapPoints.children)dot.setAttribute('r',String((dot.classList.contains('selected')?7:5.5)*scale));}
+function setView(next){viewport=next;$('map').setAttribute('viewBox',next.join(' '));resizeMarkers();}
 function scaleView(factor){const [x,y,w,h]=viewport, nw=Math.min(1000,Math.max(8,w*factor)),nh=nw*.49;setView([Math.min(1000-nw,Math.max(0,x+(w-nw)/2)),Math.min(490-nh,Math.max(0,y+(h-nh)/2)),nw,nh]);}
 $('zoomout').onclick=()=>scaleView(1.45);$('zoomin').onclick=()=>scaleView(.69);$('world').onclick=()=>setView([0,0,1000,490]);
 function clampMap(x,y,w){const h=w*.49;return [Math.min(1000-w,Math.max(0,x)),Math.min(490-h,Math.max(0,y)),w,h]}
@@ -297,7 +298,7 @@ function render(){
  if(num(x.lat)!==null&&num(x.lon)!==null){mapped++;const [cx,cy]=project(x.lon,x.lat);const dot=svg('circle',{cx,cy,r:selected===x.id?7:4.6,fill:a.provisional||a.neutral?'#e6eee9':theme[a.color],style:a.provisional||a.neutral?'--marker-outline:'+theme[a.color]:undefined,class:'marker'+(a.provisional?' provisional':a.neutral?' neutral':'')+(selected===x.id?' selected':''),tabindex:'0',role:'button','aria-label':x.city+', '+x.country+': '+fitLabel(a)+(a.missing.length?' · '+tr('Missing: ')+a.missing.join(', '):'')});const label=svg('title',{});label.textContent=x.city+' · '+fitLabel(a);dot.append(label);dot.onclick=()=>choose(x.id,true);dot.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(x.id,true)}};markerNodes.push(dot);}
  });
  const current=rows.find(a=>a.x.id===selected);if(!current)selected=null;
- mapPoints.replaceChildren(...markerNodes);$('cities').replaceChildren(...cardNodes);
+ mapPoints.replaceChildren(...markerNodes);resizeMarkers();$('cities').replaceChildren(...cardNodes);
  $('counts').textContent=lang==='es'?rows.length+' visibles · '+mapped+' en el mapa · '+(locs.length-unc.length)+' excluidos por país · '+totals.green+' encajan · '+totals.yellow+' casi encajan · '+totals.orange+' parciales · '+totals.red+' no encajan · '+totals.gray+' sin evaluar':rows.length+' shown · '+mapped+' on map · '+(locs.length-unc.length)+' country-excluded · '+totals.green+' fit · '+totals.yellow+' near · '+totals.orange+' mixed · '+totals.red+' miss · '+totals.gray+' not scored';
  if(partial)$('counts').textContent+=lang==='es'?' · '+partial+' provisionales':' · '+partial+' provisional';
  if(neutral)$('counts').textContent=rows.length+(lang==='es'?' visibles · ':' shown · ')+mapped+(lang==='es'?' en el mapa · sin criterios activos':' on map · no active criteria');
