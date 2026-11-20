@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "publicationAllowed": true,
+  "attribution": "Aptología (CC BY 4.0); Wise cost-of-living; Settle in Latin America. Individual source links and dates in each record.",
+  "records": [
+    {
+      "id": "paraguay-asuncion",
+      "status": "matched",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 754,
+          "asOf": "2026-10-18",
+          "sourceId": "Aptología · median advertised 1-bedroom rent, 939 listings",
+          "sourceUrl": "https://elbroker.github.io/aptologia-estudios-web/alquiler-por-numero-de-dormitorios-asuncion-2026/",
+          "kind": "market_rent_not_furnished_quote"
+        }
+      }
+    },
+    {
+      "id": "chile-la-serena",
+      "status": "matched",
+      "rent": {
+        "rent1brUsd": {
+          "usd": 425,
+          "asOf": null,
+          "sourceId": "Wise · city-centre 1-bedroom average, page accessed 2026-11-20",
+          "sourceUrl": "https://wise.com/us/cost-of-living/chile/la-serena",
+          "kind": "market_rent_not_furnished_quote"
+        },
+        "rentOutskirts1brUsd": {
+          "usd": 316.2,
+          "asOf": null,
+          "sourceId": "Wise · outside-centre 1-bedroom average, page accessed 2026-11-20",
+          "sourceUrl": "https://wise.com/us/cost-of-living/chile/la-serena",
+          "kind": "market_rent_not_furnished_quote"
+        }
+      }
+    },
+    {
+      "id": "argentina-bariloche",
+      "status": "matched",
+      "rent": {
+        "rent1brUsd": {
+          "usd": 518,
+          "asOf": "2026-10-09",
+          "sourceId": "Settle in Latin America · individual 1-bedroom listing, Centro, NOT city average",
+          "sourceUrl": "https://settleinlatinamerica.com/argentina/bariloche",
+          "kind": "individual_listing_not_city_average"
+        }
+      }
+    }
+  ]
+}
