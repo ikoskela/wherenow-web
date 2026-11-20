@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "publicationAllowed": true,
-  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only. Added individual Costa Rica asking-price examples with broker attribution; examples do not enter the rent cap.",
+  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only. Added individual Costa Rica asking-price examples with broker attribution; examples do not enter the rent cap. Selected district rent statistics are cited from Medio under its attribution terms, and are not used for cap scoring.",
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
-    "destinationCount": 210,
+    "destinationCount": 214,
     "withPublishedRentReference": 66,
-    "withoutPublishedRentReference": 144,
+    "withoutPublishedRentReference": 148,
     "withPublishedMonthlyTotal": 0,
     "withOtherComparableBenchmarksOnly": 66,
     "withAnyPublishedRentBenchmark": 132,
-    "withNoPublishedRentBenchmark": 78
+    "withNoPublishedRentBenchmark": 82
   },
   "records": [
     {
@@ -3349,6 +3349,17 @@
             "localPerUsd": 3.43214285714286,
             "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-11-18/2026-11-20/ing"
           }
+        },
+        "rentDistrict1brAskingUsd": {
+          "usd": 231,
+          "asOf": "2026-11-20",
+          "sourceId": "Medio · district asking-rent median",
+          "sourceUrl": "https://medio.pe/pulse/precio-m2/arequipa",
+          "kind": "district_one_bedroom_asking_median_not_citywide",
+          "scope": "Arequipa district (city center); excludes Cayma, Yanahuara and other districts",
+          "publishedMinimumSegmentCount": 10,
+          "method": "Publisher reports deduplicated active asking prices, with publication threshold of 10 listings per segment. Exact one-bedroom rental count not given; not a citywide benchmark or furnished quote. USD as reported.",
+          "attributionTerms": "https://medio.pe/terminos"
         }
       }
     },
@@ -3376,6 +3387,17 @@
             "localPerUsd": 3.43214285714286,
             "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-11-18/2026-11-20/ing"
           }
+        },
+        "rentDistrict1brAskingUsd": {
+          "usd": 203,
+          "asOf": "2026-11-20",
+          "sourceId": "Medio · district asking-rent median",
+          "sourceUrl": "https://medio.pe/pulse/precio-m2/cajamarca",
+          "kind": "district_one_bedroom_asking_median_not_citywide",
+          "scope": "Cajamarca district; not the wider province",
+          "publishedMinimumSegmentCount": 10,
+          "method": "Publisher reports deduplicated active asking prices, with publication threshold of 10 listings per segment. Exact one-bedroom rental count not given; not a citywide benchmark or furnished quote. USD as reported.",
+          "attributionTerms": "https://medio.pe/terminos"
         }
       }
     },
@@ -3423,6 +3445,17 @@
             "localPerUsd": 3.43214285714286,
             "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-11-18/2026-11-20/ing"
           }
+        },
+        "rentDistrictApartmentAskingUsd": {
+          "usd": 566,
+          "asOf": "2026-11-20",
+          "sourceId": "Medio · district asking-rent median",
+          "sourceUrl": "https://medio.pe/pulse/precio-m2/cusco",
+          "kind": "district_apartment_asking_median_all_sizes_not_citywide",
+          "scope": "Cusco district; not the wider urban area",
+          "listingCount": 24,
+          "method": "Median of deduplicated active ads for apartments of all sizes. USD as reported, not a one-bedroom or furnished quote.",
+          "attributionTerms": "https://medio.pe/terminos"
         }
       },
       "furnishedRentalSamples": {
@@ -3553,6 +3586,17 @@
             "localPerUsd": 3.43214285714286,
             "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-11-18/2026-11-20/ing"
           }
+        },
+        "rentDistrictApartmentAskingUsd": {
+          "usd": 196,
+          "asOf": "2026-11-20",
+          "sourceId": "Medio · district asking-rent median",
+          "sourceUrl": "https://medio.pe/pulse/precio-m2/ilo",
+          "kind": "district_apartment_asking_median_all_sizes_not_citywide",
+          "scope": "Ilo district; not the wider province",
+          "listingCount": 10,
+          "method": "Median of deduplicated active ads for apartments of all sizes. USD as reported, not a one-bedroom or furnished quote.",
+          "attributionTerms": "https://medio.pe/terminos"
         }
       }
     },
