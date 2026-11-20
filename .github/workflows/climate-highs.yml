@@ -1,0 +1,32 @@
+name: Populate average daytime highs (NASA POWER)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/update_climate_highs.py'
+permissions:
+  contents: write
+concurrency:
+  group: wherenow-climate-highs
+  cancel-in-progress: false
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query NASA POWER and validate 12 monthly highs per destination
+        run: python tools/update_climate_highs.py
+      - name: Commit verified climate enrichment
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Populate monthly average daytime highs from NASA POWER'
+            git push
+          fi
