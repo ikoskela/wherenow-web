@@ -1,18 +1,32 @@
 {
   "schemaVersion": 1,
   "publicationAllowed": true,
-  "attribution": "Aptología (CC BY 4.0); Wise cost-of-living; Settle in Latin America. Individual source links and dates in each record.",
+  "attribution": "Nostos (Navoy) CC BY 4.0 compilation; field source IDs included; earlier observations preserved",
+  "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
+  "generatedAt": "2026-11-20T04:39:32.650470+00:00",
+  "coverage": {
+    "destinations": 208,
+    "withRent": 3,
+    "missing": 205,
+    "stats": {
+      "new": 0,
+      "preserved": 3,
+      "missing": 205,
+      "ambiguous": 0,
+      "no_eligible_rent": 0
+    }
+  },
   "records": [
     {
-      "id": "paraguay-asuncion",
+      "id": "argentina-bariloche",
       "status": "matched",
       "rent": {
-        "rentTypical1brUsd": {
-          "usd": 754,
-          "asOf": "2026-10-18",
-          "sourceId": "Aptología · median advertised 1-bedroom rent, 939 listings",
-          "sourceUrl": "https://elbroker.github.io/aptologia-estudios-web/alquiler-por-numero-de-dormitorios-asuncion-2026/",
-          "kind": "market_rent_not_furnished_quote"
+        "rent1brUsd": {
+          "usd": 518,
+          "asOf": "2026-10-09",
+          "sourceId": "Settle in Latin America · individual 1-bedroom listing, Centro, NOT city average",
+          "sourceUrl": "https://settleinlatinamerica.com/argentina/bariloche",
+          "kind": "individual_listing_not_city_average"
         }
       }
     },
@@ -37,15 +51,15 @@
       }
     },
     {
-      "id": "argentina-bariloche",
+      "id": "paraguay-asuncion",
       "status": "matched",
       "rent": {
-        "rent1brUsd": {
-          "usd": 518,
-          "asOf": "2026-10-09",
-          "sourceId": "Settle in Latin America · individual 1-bedroom listing, Centro, NOT city average",
-          "sourceUrl": "https://settleinlatinamerica.com/argentina/bariloche",
-          "kind": "individual_listing_not_city_average"
+        "rentTypical1brUsd": {
+          "usd": 754,
+          "asOf": "2026-10-18",
+          "sourceId": "Aptología · median advertised 1-bedroom rent, 939 listings",
+          "sourceUrl": "https://elbroker.github.io/aptologia-estudios-web/alquiler-por-numero-de-dormitorios-asuncion-2026/",
+          "kind": "market_rent_not_furnished_quote"
         }
       }
     }
