@@ -46,6 +46,7 @@ def main():
    else:errors.append(c.get('id','unknown')+': '+error)
    if n%25==0:print('processed',n,'of',len(cities),'success',successes,flush=True)
  # Preserve all existing verified highs; never replace failures with estimates.
+ print('requested missing destinations:',len(futures),'successful:',successes,'failed:',len(errors),flush=True)
  if successes==0 and futures:
   raise RuntimeError('No successful NASA POWER requests; no file changed. First errors: '+repr(errors[:4]))
  p.write_text(json.dumps(raw,ensure_ascii=False,separators=(',',':'))+chr(10))
