@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "publicationAllowed": true,
-  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only.",
+  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only. Added individual Costa Rica asking-price examples with broker attribution; examples do not enter the rent cap.",
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
@@ -9,9 +9,9 @@
     "withPublishedRentReference": 66,
     "withoutPublishedRentReference": 144,
     "withPublishedMonthlyTotal": 0,
-    "withOtherComparableBenchmarksOnly": 65,
-    "withAnyPublishedRentBenchmark": 131,
-    "withNoPublishedRentBenchmark": 79
+    "withOtherComparableBenchmarksOnly": 66,
+    "withAnyPublishedRentBenchmark": 132,
+    "withNoPublishedRentBenchmark": 78
   },
   "records": [
     {
@@ -2359,6 +2359,27 @@
       }
     },
     {
+      "id": "costa-rica-palmares",
+      "status": "matched",
+      "rent": {
+        "rentTwoBedroomListingUsd": {
+          "usd": 560,
+          "asOf": "2026-11-20",
+          "sourceId": "Montero Realty Group · one two-bedroom listing, not a market median",
+          "sourceUrl": "https://monterorealtygroup.com/apartamento-alquiler-palmares/10489956",
+          "kind": "single_two_bedroom_listing_context_only",
+          "sourceCurrency": "CRC",
+          "sourceAmount": 250000,
+          "scope": "La Cocaleca, Palmares, Alajuela",
+          "fx": {
+            "localPerUsd": 446.48,
+            "sourceUrl": "https://bgeneral.fi.cr/historico/"
+          },
+          "method": "One broker asking price; equal deposit and capped water included; not a comparable one-bedroom."
+        }
+      }
+    },
+    {
       "id": "costa-rica-san-josé",
       "status": "matched",
       "rent": {
@@ -2414,6 +2435,56 @@
           },
           "method": "Aggregate asking-rent median across rental property types; may include commercial listings. Display only, not a one-bedroom apartment or typical housing price."
         }
+      }
+    },
+    {
+      "id": "costa-rica-sarchí",
+      "status": "matched",
+      "rent": {},
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "One broker-advertised example; not a citywide median",
+        "sampleSize": 1,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "Furnished one-bedroom apartment",
+            "neighborhood": "San Pedro, Sarchí",
+            "usd": 1100,
+            "bedrooms": 1,
+            "stay": "one_month_explicit",
+            "url": "https://bishoprealtycostarica.com/property/fabulous-short-term-rental-in-sarchi/",
+            "included": "Utilities and Wi-Fi included",
+            "note": "Market availability for selected dates not checked."
+          }
+        ]
+      }
+    },
+    {
+      "id": "costa-rica-zarcero",
+      "status": "matched",
+      "rent": {},
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "One broker-advertised example; not a citywide median",
+        "sampleSize": 1,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "Furnished two-bedroom chalet",
+            "neighborhood": "Guadalupe, Zarcero",
+            "usd": 1200,
+            "bedrooms": 2,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "url": "https://remax-occidente-cr.com/propiedades/furnished-mountain-chalet-for-rent-in-zarcero/",
+            "included": "Matching security deposit",
+            "note": "Furnished chalet; not a one-bedroom comparison."
+          }
+        ]
       }
     },
     {
