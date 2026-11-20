@@ -5,7 +5,7 @@ No personal records, credentials, or paid APIs. Failed lookups stay unknown.
 """
 import json,urllib.request,urllib.parse,time,datetime,sys
 from pathlib import Path
-BASE='https://power.larc.nasa.gov/api/temporal/climatology/point'
+BASE='https://power.larc.nasa.gov/api/temporal/climatology/point' # NASA POWER source
 MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
 def get_highs(lat,lon):
  params={'parameters':'T2M_MAX_AVG','community':'RE','longitude':str(lon),'latitude':str(lat),'format':'JSON','start':'1991','end':'2020'}
