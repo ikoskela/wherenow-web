@@ -103,10 +103,18 @@ function zoneOffset(zone){if(!zone)return null;const [year,month]=bounds(), key=
 function refOffset(){const v=$('offset').value;return num(v)??zoneOffset(v==='@browser'?browserZone:v);}
 function timeLabel(x,d){if(d!==null)return d===0?tr('Same local time'):new Intl.NumberFormat(lang).format(d)+tr(' h apart');if(!x.tz)return '';const match=zoneNames.find(([id])=>id===x.tz);return match?tr(match[1]):x.tz.split('/').at(-1).replace(/_/g,' ');}
 function labelLevel(v){return num(v)??({low:1,moderate:2,medium:2,high:3,lower_expected:1,higher_expected:3}[String(v)]??null)}
+function reviewedRent(x){
+ const o=window.whereNowRentOverlay;
+ const r=o?.records?.find(v=>v.id===x.id);
+ if(!o?.publicationAllowed||!r||r.status!=='matched')return null;
+ const f=r.rent||{};
+ const v=f.rentTypical1brUsd||f.rent1brUsd||f.rentOutskirts1brUsd;
+ return v&&Number.isFinite(v.usd)&&v.usd>0?v:null;
+}
 function monthlyCosts(x,edit){
  const amount=v=>{const n=num(v);return n!==null&&n>=0?n:null};
  const localRent=amount(edit.rent),localOther=amount(edit.other),localTotal=amount(edit.cost);
- const rent=localRent??amount(x.rentUsd),other=localOther??amount(x.nonRentUsd);
+ const market=reviewedRent(x);const rent=localRent??amount(x.rentUsd)??(market?market.usd:null),other=localOther??amount(x.nonRentUsd);
  const hasLocalPart=localRent!==null||localOther!==null;
  const sum=rent!==null&&other!==null?rent+other:null;
  // Do not pair altered components with a published total from a different basis.
@@ -163,6 +171,10 @@ function details(a){const out=$('detail');out.replaceChildren();if(!a)return;con
 const [,mo]=bounds();const known=[timeLabel(x,a.d)||null,a.t===null?null:a.t+tr(' °C mean'),a.rain===null?null:a.rain+tr(' mm precipitation'),a.mos===null?null:tr('Mosquito: ')+tr(level[a.mos]),a.social===null?null:tr('Social scene: ')+tr(socialName[a.social])].filter(Boolean);
 out.append(make('p',monthName(mo)+': '+(known.length?known.join(' · '):tr('No usable observations yet.')),'citymetrics'));
 const costs=[['Rent',a.rent],['Other monthly costs',a.other],['Total monthly cost',a.cost]];
+const market=reviewedRent(x);
+if(market){const p=make('p',lang==='es'?'Referencia de alquiler (no es precio verificado de vivienda amueblada): '+usd(market.usd)+'/mes. '+(market.sourceId||'')+' · '+(market.asOf||'fecha de referencia no indicada'):'Rent reference (not a verified furnished quote): '+usd(market.usd)+'/month. '+(market.sourceId||'')+' · '+(market.asOf||'source date not stated'));out.append(p);
+if(market.sourceUrl){const link=make('a',lang==='es'?'Fuente del alquiler':'Rent source');link.href=market.sourceUrl;link.target='_blank';link.rel='noopener noreferrer';out.append(link);}}
+
 if(costs.some(([,v])=>v!==null)||a.checks.some(c=>[tr('Rent'),tr('Total monthly cost')].includes(c.name))){
  out.append(make('p',tr('Monthly costs')+': '+costs.map(([label,v])=>tr(label)+' '+(v===null?tr('Unknown'):usd(v)+tr('/month'))).join(' · ')));
 }
@@ -201,7 +213,9 @@ function change(){const a=num($('minTemp').value),b=num($('maxTemp').value);$('m
 $('prefs').addEventListener('input',change);$('prefs').addEventListener('submit',e=>e.preventDefault());$('search').addEventListener('input',render);$('reset').onclick=()=>{$('prefs').reset();$('onlyComplete').checked=false;save('wherenow-complete-v1',false);$('sort').value='match';$('month').value=defaultMonth();$('search').value='';selected=null;setView([0,0,1000,490]);change();};
 function start(raw){dataRaw=raw;const arr=Array.isArray(raw)?raw:raw.locations;locs=(arr||[]).filter(x=>x.city&&x.country).map((x,i)=>({...x,id:String(x.id??i),airport:x.airport??x.iata??null}));
  const dataCities=locs.filter(x=>x.airport).map(x=>[x.city+' ('+x.airport+')',x.city]);for(const [name] of dataCities){const o=make('option');o.value=name;$('airports').append(o)}
- mapInit();refreshSources();render();}
+ mapInit();refreshSources();render();
+fetch('rent-overlay.json?v=20261120').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
+}
 function refreshSources(){const raw=dataRaw;if(!raw)return;const tempCount=locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length,rainCount=locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length;
  const src=$('sources');src.textContent=lang==='es'?'Las ubicaciones son aproximadas. El mapa base se simplificó para facilitar la orientación. '+tempCount+' de '+locs.length+' destinos tienen datos de temperatura y '+rainCount+' de precipitación. ':'City points are approximate; simplified basemap for orientation. '+locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length+' of '+locs.length+' have sourced temperature; '+locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length+' have sourced precipitation. ';
  const unseen=new Set();const sourceList=[...(!Array.isArray(raw)&&Array.isArray(raw.sources)?raw.sources:[]),...locs.map(x=>x.source),...locs.map(x=>x.sources)].flat().filter(Boolean);for(const s of sourceList){const href=typeof s==='string'?s:s.url,label=typeof s==='string'?s:s.label??s.name??s.url;if(!href||!label||unseen.has(href))continue;try{const u=new URL(href);if(u.protocol!=='https:')continue;unseen.add(href);const l=make('a',label);l.href=u.href;l.target='_blank';l.rel='noopener noreferrer';src.append(l,document.createTextNode(' '));}catch{}}
