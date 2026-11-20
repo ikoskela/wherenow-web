@@ -1,0 +1,34 @@
+name: Update public rent references
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/update_rent_live.py'
+  schedule:
+    - cron: '17 11 * * 0'
+permissions:
+  contents: write
+concurrency:
+  group: wherenow-rent-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download, validate, match and export city rents
+        run: python tools/update_rent_live.py
+      - name: Commit validated public overlay only if changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rent-overlay.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh sourced USD city rents'
+            git push
+          fi
