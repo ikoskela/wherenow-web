@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "publicationAllowed": true,
-  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents.",
+  "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record.",
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
     "destinationCount": 210,
-    "withPublishedRentReference": 64,
-    "withoutPublishedRentReference": 146,
+    "withPublishedRentReference": 65,
+    "withoutPublishedRentReference": 145,
     "withPublishedMonthlyTotal": 0,
-    "withOtherComparableBenchmarksOnly": 61,
-    "withAnyPublishedRentBenchmark": 125,
-    "withNoPublishedRentBenchmark": 85
+    "withOtherComparableBenchmarksOnly": 64,
+    "withAnyPublishedRentBenchmark": 129,
+    "withNoPublishedRentBenchmark": 81
   },
   "records": [
     {
@@ -2719,6 +2719,32 @@
       }
     },
     {
+      "id": "ecuador-puerto-ayora-galápagos",
+      "status": "matched",
+      "rent": {
+        "rentResident1brSurveyUsd": {
+          "usd": 200,
+          "p25Usd": 180,
+          "p75Usd": 260,
+          "asOf": "2025-11",
+          "periodStart": "2024-12",
+          "sampleCount": 59,
+          "clusterCount": 34,
+          "sourceId": "INEC Ecuador · ENIGHUR 2024–2025 · reported one-bedroom resident rents",
+          "sourceUrl": "https://www.ecuadorencifras.gob.ec/encuesta-nacional-de-ingresos-y-gastos-de-los-hogares-urbanos-y-rurales/",
+          "kind": "household_survey_one_bedroom_existing_paid_rent_context_only",
+          "onlyForContext": true,
+          "scope": "Puerto Ayora urban parish / cantonal seat (200350), Santa Cruz canton, Galápagos province; not canton-wide or island-wide",
+          "license": {
+            "name": "CC BY 4.0",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          "method": "WhereNow calculation from Ecuador INEC ENIGHUR 2024–2025 household microdata. Urban locality, apartment, one room exclusive for sleeping, positive self-reported monthly rent; cash-apartment-rent expenditure verified in the parallel household table and zero anticresis expenditure required. Median and quartiles use survey expansion weights. Existing resident rents, may include utilities; not current asking, visitor, or furnished rates. Quartiles are descriptive, not a confidence interval or forecast. Puerto Ayora is a subgroup of the Galápagos provincial sample, not an independently designed survey domain.",
+          "scopeSourceUrl": "https://aplicaciones2.ecuadorencifras.gob.ec/SIN/descargas/cge2026.pdf"
+        }
+      }
+    },
+    {
       "id": "ecuador-quito",
       "status": "matched",
       "rent": {
@@ -2894,6 +2920,34 @@
       },
       "atlasDistanceKm": 0.3,
       "sourceCity": "Berlin"
+    },
+    {
+      "id": "greece-athens",
+      "status": "matched",
+      "rent": {
+        "rentPremium1brUsd": {
+          "usd": 1264,
+          "localAmount": 1150,
+          "currency": "EUR",
+          "asOf": "2025",
+          "asOfPrecision": "2025 survey, usually collected around midyear; date is approximate",
+          "sourceId": "European Commission, Eurostat · Athina selected-neighborhood average for one-bedroom flats, PRC_COLC_RENTS",
+          "sourceUrl": "https://doi.org/10.2908/PRC_COLC_RENTS",
+          "datasetApi": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_colc_rents?lang=en&time=2025&geo=EL_CAP&currency=EUR&building=FLAT1",
+          "kind": "selected_higher_quality_neighbourhoods_not_citywide_or_furnished_quote",
+          "scope": "Athens selected neighborhoods comparable to housing used by international staff in Brussels",
+          "method": "Eurostat arithmetic mean of rents observed by participating real estate agencies from recent transactions for unfurnished good-to-very-good one-bedroom flats in preselected neighborhoods. Excludes charges and utilities. The source is Eurostat-owned data table PRC_COLC_RENTS, not the ISRP-OECD booklet. WhereNow converted from EUR and rounded; Eurostat is not responsible for the conversion.",
+          "fx": {
+            "asOf": "2026-11-19",
+            "usdPerEur": 1.0992,
+            "sourceUrl": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
+          },
+          "license": {
+            "name": "Eurostat statistical data reuse with attribution and indication of modifications",
+            "url": "https://ec.europa.eu/eurostat/help/copyright-notice"
+          }
+        }
+      }
     },
     {
       "id": "guatemala-antigua-guatemala",
@@ -3471,6 +3525,29 @@
       }
     },
     {
+      "id": "philippines-manila",
+      "status": "matched",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 314,
+          "localAmount": 20000,
+          "currency": "PHP",
+          "asOf": "2026-11-19",
+          "sourceId": "PhilRoom · one-bedroom condo asking-rent median, 49 listings",
+          "sourceUrl": "https://www.philroom.ph/en/market",
+          "kind": "one_bedroom_condo_monthly_asking_median_not_furnished_quote",
+          "scope": "City of Manila only; excludes other cities in Metro Manila",
+          "listingCount": 49,
+          "method": "This is the publisher's reported asking-rent median for one-bedroom condos. No furnishing or short-stay eligibility standard. A public market statistic only; no individual listing content reused. WhereNow converted and rounded.",
+          "fx": {
+            "asOf": "2026-11-19",
+            "localPerUsd": 63.633,
+            "sourceUrl": "https://www.bsp.gov.ph/statistics/external/day99.aspx"
+          }
+        }
+      }
+    },
+    {
       "id": "portugal-angra-do-heroísmo-azores",
       "status": "matched",
       "rent": {
@@ -3793,6 +3870,45 @@
           "furnishing": "unknown",
           "leaseTerm": "unknown",
           "scope": "Chiang Mai city centre / outside centre (provider-defined)"
+        }
+      }
+    },
+    {
+      "id": "united-arab-emirates-abu-dhabi",
+      "status": "matched",
+      "rent": {
+        "rentSelectedDistrict1brRangeUsd": {
+          "lowUsd": 1611,
+          "highUsd": 2042,
+          "currency": "AED",
+          "asOf": "2026-11-20",
+          "sourceId": "EstateIQ (estateiq.ae)",
+          "sourceUrl": "https://estateiq.ae/data",
+          "kind": "selected_district_one_bedroom_asking_medians_not_citywide_or_furnished",
+          "scope": "Al Reef and Al Reem Island, Abu Dhabi; two district medians, not a market range for the city",
+          "method": "Annual advertised medians independently reported for each district. WhereNow divided annual AED asks by 12 and the AED/USD peg, and rounded. Not a signed lease, price for a one-month stay, or citywide estimate.",
+          "districts": [
+            {
+              "name": "Al Reef",
+              "annualAed": 71000,
+              "listingCount": 23,
+              "sourceUrl": "https://estateiq.ae/yield/al-reef/apartments/1-bedroom"
+            },
+            {
+              "name": "Al Reem Island",
+              "annualAed": 90000,
+              "listingCount": 526,
+              "sourceUrl": "https://estateiq.ae/yield/al-reem-island/apartments/1-bedroom"
+            }
+          ],
+          "fx": {
+            "localPerUsd": 3.6725,
+            "sourceUrl": "https://centralbank.ae/en/forex-eibor/exchange-rates/"
+          },
+          "license": {
+            "name": "CC BY 4.0",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
         }
       }
     },
