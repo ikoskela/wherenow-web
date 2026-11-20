@@ -5,12 +5,12 @@
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
   "generatedAt": "2026-11-20",
   "coverage": {
-    "destinationCount": 208,
-    "withPublishedRentReference": 62,
+    "destinationCount": 210,
+    "withPublishedRentReference": 64,
     "withoutPublishedRentReference": 146,
     "withPublishedMonthlyTotal": 0,
     "withOtherComparableBenchmarksOnly": 61,
-    "withAnyPublishedRentBenchmark": 123,
+    "withAnyPublishedRentBenchmark": 125,
     "withNoPublishedRentBenchmark": 85
   },
   "records": [
@@ -2503,6 +2503,36 @@
       }
     },
     {
+      "id": "ecuador-guayaquil",
+      "status": "matched",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 660,
+          "asOf": "2026-11-20",
+          "sourceId": "Numbeo crowdsourced cost of living · 1-bedroom monthly rent city centre",
+          "sourceUrl": "https://es.numbeo.com/coste-de-vida/ciudad/Guayaquil",
+          "kind": "one_bedroom_crowdsourced_apartment_monthly_rent_not_verified_furnished",
+          "scope": "Guayaquil city city centre",
+          "method": "Crowdsourced mean asking/market 1-bedroom rent. NOT verified furnished, 30-day, short-stay, or actual available listing. Nominal USD (Ecuador uses USD).",
+          "furnished": "unknown",
+          "shortStayEligible": "unknown",
+          "confidence": "moderate-low, contributors self-reported"
+        },
+        "rentOutskirts1brUsd": {
+          "usd": 510.36,
+          "asOf": "2026-11-20",
+          "sourceId": "Numbeo crowdsourced cost of living · 1-bedroom monthly rent outside centre",
+          "sourceUrl": "https://es.numbeo.com/coste-de-vida/ciudad/Guayaquil",
+          "kind": "one_bedroom_crowdsourced_apartment_monthly_rent_not_verified_furnished",
+          "scope": "Guayaquil city outside centre",
+          "method": "Crowdsourced mean asking/market 1-bedroom rent. NOT verified furnished, 30-day, short-stay, or actual available listing. Nominal USD (Ecuador uses USD).",
+          "furnished": "unknown",
+          "shortStayEligible": "unknown",
+          "confidence": "moderate-low, contributors self-reported"
+        }
+      }
+    },
+    {
       "id": "ecuador-ibarra",
       "status": "matched",
       "rent": {
@@ -2559,6 +2589,36 @@
             "url": "https://tulugar.com/es/datos"
           },
           "method": "Aggregate asking-rent median across rental property types; may include commercial listings. Display only, not a one-bedroom apartment or typical housing price."
+        }
+      }
+    },
+    {
+      "id": "ecuador-quito",
+      "status": "matched",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 552.33,
+          "asOf": "2026-11-20",
+          "sourceId": "Numbeo crowdsourced cost of living · 1-bedroom monthly rent city centre",
+          "sourceUrl": "https://es.numbeo.com/coste-de-vida/ciudad/Quito",
+          "kind": "one_bedroom_crowdsourced_apartment_monthly_rent_not_verified_furnished",
+          "scope": "Quito city city centre",
+          "method": "Crowdsourced mean asking/market 1-bedroom rent. NOT verified furnished, 30-day, short-stay, or actual available listing. Nominal USD (Ecuador uses USD).",
+          "furnished": "unknown",
+          "shortStayEligible": "unknown",
+          "confidence": "moderate-low, contributors self-reported"
+        },
+        "rentOutskirts1brUsd": {
+          "usd": 356.08,
+          "asOf": "2026-11-20",
+          "sourceId": "Numbeo crowdsourced cost of living · 1-bedroom monthly rent outside centre",
+          "sourceUrl": "https://es.numbeo.com/coste-de-vida/ciudad/Quito",
+          "kind": "one_bedroom_crowdsourced_apartment_monthly_rent_not_verified_furnished",
+          "scope": "Quito city outside centre",
+          "method": "Crowdsourced mean asking/market 1-bedroom rent. NOT verified furnished, 30-day, short-stay, or actual available listing. Nominal USD (Ecuador uses USD).",
+          "furnished": "unknown",
+          "shortStayEligible": "unknown",
+          "confidence": "moderate-low, contributors self-reported"
         }
       }
     },
