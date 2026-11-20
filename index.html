@@ -262,6 +262,20 @@ if(alt){const value=Number.isFinite(alt.usd)?usd(alt.usd):usd(alt.lowUsd)+'–'+
  const p=make('p',alt.label+': '+value+tr('/month')+deposit+'. '+(lang==='es'?'No determina el filtro de alquiler. ':'Not used to decide rent-cap matches. ')+(alt.sourceId||'')+' · '+(alt.asOf||''));out.append(p);
  try{const u=new URL(alt.sourceUrl);if(u.protocol==='https:'){const link=make('a',lang==='es'?'Fuente de la referencia':'Benchmark source');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';out.append(link);}}catch{}
 }
+const furnishedSamples=window.whereNowRentOverlay?.records?.find(v=>v.id===x.id)?.furnishedRentalSamples;
+if(furnishedSamples?.listings?.length){
+ const block=make('section',undefined,'furnished-evidence');
+ block.append(make('h3',lang==='es'?'Ejemplos reales de alquiler amueblado':'Furnished rental listing examples'));
+ block.append(make('p',lang==='es'?'Precios anunciados, no reservas ni presupuestos garantizados. Un precio mensual no prueba que acepten solo 30 días. No afectan la clasificación de alquiler.':'Advertised prices, not bookable quotes or guaranteed budgets. A monthly price does not prove a 30-day-only lease is accepted. These examples do not affect rent ranking.'));
+ const ul=make('ul');
+ for(const item of furnishedSamples.listings){
+  const li=make('li');const title=make('strong',usd(item.usd)+'/month · '+item.neighborhood+' · '+item.label);li.append(title);
+  li.append(make('span',' · '+(item.stay==='one_month_explicit'?(lang==='es'?'El anuncio ofrece una tarifa de un mes':'One-month rate explicitly advertised'):(lang==='es'?'Duración mínima sin verificar':'Minimum lease length unknown'))+'. '+item.included+'. '+(item.note||'')));
+  try{const u=new URL(item.url);if(u.protocol==='https:'){const link=make('a',lang==='es'?' · Ver anuncio':' · View listing');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';li.append(link)}}catch{}
+  ul.append(li);
+ }
+ block.append(ul);out.append(block);
+}
 const searchRent=make('a',lang==='es'?'Buscar alquileres amueblados para este mes':'Search for furnished rentals for this month');
 const searchMonth=monthName(mo)+' '+bounds()[0];
 searchRent.href='https://www.google.com/search?q='+encodeURIComponent(x.city+' '+x.country+' '+searchMonth+' '+(lang==='es'?'alquiler amueblado departamento 1 dormitorio mensual':'monthly furnished one-bedroom rental'));
