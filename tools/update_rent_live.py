@@ -1,6 +1,6 @@
 import json,urllib.request,unicodedata,datetime
 from pathlib import Path
-URL='https://nostos.navoy.io/data/nomad-cities-2026.json'
+URL='https://nostos.navoy.io/data/nomad-cities-2026.json' # Nostos 2026.11.19
 def norm(s):
  s=unicodedata.normalize('NFKD',str(s or '')).casefold()
  return ' '.join(''.join(c for c in s if not unicodedata.combining(c)).split())
