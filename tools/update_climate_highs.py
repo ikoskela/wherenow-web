@@ -33,8 +33,8 @@ def main():
    highs,url=get_highs(c['lat'],c['lon'])
    return i,(highs,url),None
   except Exception as e:return i,None,str(e)[:180]
- with ThreadPoolExecutor(max_workers=6) as pool:
-  futures=[pool.submit(lookup,item) for item in enumerate(cities)]
+ with ThreadPoolExecutor(max_workers=4) as pool:
+  futures=[pool.submit(lookup,item) for item in enumerate(cities) if not (len(item[1].get('months',[]))==12 and all(isinstance(m.get('highC'),(int,float)) and -75<m['highC']<65 for m in item[1]['months']))]
   for n,f in enumerate(as_completed(futures),1):
    i,result,error=f.result();c=cities[i]
    if result:
@@ -46,9 +46,9 @@ def main():
    else:errors.append(c.get('id','unknown')+': '+error)
    if n%25==0:print('processed',n,'of',len(cities),'success',successes,flush=True)
  # Preserve all existing verified highs; never replace failures with estimates.
- if successes==0:
+ if successes==0 and futures:
   raise RuntimeError('No successful NASA POWER requests; no file changed. First errors: '+repr(errors[:4]))
  p.write_text(json.dumps(raw,ensure_ascii=False,separators=(',',':'))+'\\n')
- print(json.dumps({'locations':len(cities),'updated':successes,'unavailable':len(errors),'errors':errors}))
+ print(json.dumps({'locations':len(cities),'updated':successes,'complete':sum(len(c.get('months',[]))==12 and all(isinstance(m.get('highC'),(int,float)) for m in c['months']) for c in cities),'unavailable':len(errors),'errors':errors}))
 
 if __name__=='__main__':main()
