@@ -5,12 +5,25 @@ Only writes sourced values; persists failure diagnostics for follow-up runs.
 """
 import datetime,json,os,time,urllib.error,urllib.parse,urllib.request
 from pathlib import Path
-BASE='https://power.larc.nasa.gov/api/temporal/climatology/point'
+BASE='https://power.larc.nasa.gov/api/temporal/monthly/point'
 MONTHS=('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC')
 BATCH_SIZE=max(1,min(208,int(os.environ.get('CLIMATE_BATCH_SIZE','208'))))
 def valid(city):
  m=city.get('months',[])
  return len(m)==12 and all(isinstance(v.get('highC'),(int,float)) and -75<v['highC']<65 for v in m)
+def monthly_normals(raw):
+ header=raw.get('header',{})
+ if header.get('start')!='19910101' or header.get('end')!='20201231':
+  return None
+ series=raw['properties']['parameter']['T2M_MAX_AVG']
+ values=[]
+ for month in range(1,13):
+  sample=[series.get(f'{year}{month:02d}') for year in range(1991,2021)]
+  if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and -75<v<65 for v in sample):
+   return None
+  values.append(round(sum(sample)/30,1))
+ return values
+
 def fetch(city):
  params={'parameters':'T2M_MAX_AVG','community':'RE','longitude':city['lon'],'latitude':city['lat'],'format':'JSON','start':'1991','end':'2020'}
  url=BASE+'?'+urllib.parse.urlencode(params)
@@ -20,8 +33,8 @@ def fetch(city):
    status=response.status
    raw=json.load(response)
   series=raw['properties']['parameter']['T2M_MAX_AVG']
-  values=[series.get(k) for k in MONTHS]
-  if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and -75<v<65 for v in values):
+  values=monthly_normals(raw)
+  if values is None:
    return None,{'status':status,'reason':'missing_or_invalid_months','keys':list(series)[:20]}
   return ([round(v,1) for v in values],url),None
  except urllib.error.HTTPError as e:
@@ -59,7 +72,7 @@ def main():
     if isinstance(old,bool) or not isinstance(old,(int,float)) or not -75<old<65:
      month['highC']=value
    city['highTempSource']=url
-   city['highTempNote']='NASA POWER 1991–2020 T2M_MAX_AVG gridded climatology; monthly average of daily maxima, not a forecast.'
+   city['highTempNote']='NASA POWER Monthly API T2M_MAX_AVG, averaged by calendar month across 1991–2020; modeled daily highs, not station observations or a forecast.'
    failures.pop(city['id'],None);success+=1
    print('SUCCESS',city['id'],values,flush=True)
   else:
