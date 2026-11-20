@@ -3266,6 +3266,82 @@
             "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PD04638PD/json/2026-11-18/2026-11-20/ing"
           }
         }
+      },
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "Advertised Cusco furnished apartments and dated-unknown Vrbo 28-night totals. USD amounts from marketplace display, not guaranteed availability or 30-day quotes. Long-lease units deliberately distinguished from short stays.",
+        "sourceType": "public_listing_advertisements",
+        "sampleSize": 5,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "Prime-location apartment — Vrbo indicative 28-night total",
+            "neighborhood": "Cusco (specific neighborhood not independently verified)",
+            "usd": 541,
+            "bedrooms": null,
+            "areaSqm": null,
+            "stay": "28_nights_provider_price_dates_unverified",
+            "furnishing": "furnished vacation apartment",
+            "included": "Vrbo displayed all fees included for 28 nights; date, taxes, occupancy and exact unit needs verification",
+            "deposit": "unknown",
+            "url": "https://www.vrbo.com/tgp/lodging/theme/longstay/941/cusco",
+            "note": "USD 541 is displayed for 28 nights, NOT a one-month lease rate or verified quote for chosen dates. May change by date."
+          },
+          {
+            "label": "Mirador All Sur Cusco — Santa Ana, Vrbo",
+            "neighborhood": "Santa Ana",
+            "usd": 685,
+            "bedrooms": null,
+            "areaSqm": null,
+            "stay": "28_nights_provider_price_dates_unverified",
+            "furnishing": "vacation lodging, furnishing implied; unit type to verify",
+            "included": "Vrbo displayed 28-night total including fees; amenities and dates need validation",
+            "deposit": "unknown",
+            "url": "https://www.vrbo.com/tgp/lodging/theme/longstay/941/cusco",
+            "note": "USD 685 for 28 nights; not a verified 30-night apartment price."
+          },
+          {
+            "label": "Cruzpata fully furnished apartment",
+            "neighborhood": "Cruzpata",
+            "usd": 549,
+            "bedrooms": 2,
+            "areaSqm": 80,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "furnished and equipped",
+            "included": "Equipped kitchen, fourth floor walk-up; utilities/internet not confirmed",
+            "deposit": "unknown",
+            "url": "https://www.adondevivir.com/departamentos-en-alquiler-en-cusco-publicado-hace-menos-de-1-mes.html",
+            "note": "USD 549 marketplace conversion of S/1,900 monthly; no explicit 30-day lease permission. Source mentions 3 dormitorios elsewhere, so count is based on description saying 2."
+          },
+          {
+            "label": "Magisterio furnished 2BR apartment",
+            "neighborhood": "Magisterio / Real Plaza",
+            "usd": 586,
+            "bedrooms": 2,
+            "areaSqm": 62,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "fully furnished",
+            "included": "Common-area maintenance included; 2 months paid in advance plus 1 month deposit required",
+            "deposit": "one-month deposit; two months advance",
+            "url": "https://urbania.pe/buscar/alquiler-de-departamentos-en-cusco--cusco--cusco",
+            "note": "USD 586 marketplace conversion of S/2,000 monthly. Rent not confirmed for a 30-day only stay; substantial upfront payment."
+          },
+          {
+            "label": "San Blas fully furnished 2BR — 12-month minimum",
+            "neighborhood": "San Blas / Tandapata",
+            "usd": 595,
+            "bedrooms": 2,
+            "areaSqm": 80,
+            "stay": "one_year_minimum_explicit",
+            "furnishing": "fully furnished and equipped",
+            "included": "2 months deposit and 1 month advance; walking-only access",
+            "deposit": "two months deposit; one month advance",
+            "url": "https://www.adondevivir.com/departamentos-en-alquiler-en-cusco-publicado-hace-menos-de-15-dias.html",
+            "note": "Explicit minimum one-year lease. Not suitable for month-to-month stays despite description mentioning temporary rental potential."
+          }
+        ]
       }
     },
     {
