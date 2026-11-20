@@ -150,6 +150,7 @@ function secondaryRent(x){
   ['rentHousingPaidBandUsd','Historical median rent band (all dwelling sizes)','Tramo histórico de la mediana pagada (todos los tamaños)'],
   ['rentPaid1brUsd','One-bedroom median rent paid by existing tenants','Mediana pagada por inquilinos actuales (un dormitorio)'],
   ['rentPublicHousing1brUsd','Public-housing one-bedroom median (eligibility limits)','Mediana de vivienda pública (un dormitorio; acceso limitado)'],
+  ['rentRegisteredContractIndexUsd','Registered-rent index (all sizes; not a one-bedroom quote)','Índice de alquiler registrado (todos los tamaños; no es una cotización de un dormitorio)'],
   ['rentHousingLeaseMedianUsd','New lease median (all bedroom counts)','Mediana de contratos nuevos (todos los tamaños)'],
   ['rentModeled45m2Usd','Modeled rent for 45 m² from signed leases','Alquiler estimado para 45 m² a partir de contratos firmados'],
   ['rentApartmentMedianUsd','Apartment asking median (all bedroom counts)','Mediana de alquiler anunciado (departamentos de todos los tamaños)'],
@@ -331,7 +332,7 @@ function start(raw){dataRaw=raw;const arr=Array.isArray(raw)?raw:raw.locations;l
  mapInit();refreshSources();render();
 fetch('humidity-overlay.json?v=1').then(r=>r.ok?r.json():null).then(o=>{if(o?.schemaVersion===1&&o.parameter==='RH2M'&&o.records){let changed=0;for(const x of locs){const entry=o.records[x.id];if(!entry||!Array.isArray(entry.months)||entry.months.length!==12)continue;for(let i=0;i<12;i++){const v=entry.months[i];if(typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=100&&x.months?.[i]){x.months[i].humidityPct=v;changed++;}}}if(changed)render();}}).catch(()=>{});
 fetch('airport-access.json?v=20261120-airport').then(r=>r.ok?r.json():null).then(a=>{if(a?.schemaVersion===1&&a.records&&a.airports)airportData=a;}).catch(()=>{}).finally(()=>{airportLoading=false;render();});
-fetch('rent-overlay.json?v=20261120-coverage-r4').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
+fetch('rent-overlay.json?v=20261120-coverage-r5').then(r=>r.ok?r.json():null).then(o=>{if(o?.publicationAllowed&&Array.isArray(o.records)){window.whereNowRentOverlay=o;render();}}).catch(()=>{});
 }
 function refreshSources(){const raw=dataRaw;if(!raw)return;const tempCount=locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length,rainCount=locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length;
  const src=$('sources');src.textContent=lang==='es'?'Las ubicaciones son aproximadas. El mapa base se simplificó para facilitar la orientación. '+tempCount+' de '+locs.length+' destinos tienen datos de temperatura y '+rainCount+' de precipitación. ':'City points are approximate; simplified basemap for orientation. '+locs.filter(x=>x.months?.some(m=>num(m.tempC)!==null)).length+' of '+locs.length+' have sourced temperature; '+locs.filter(x=>x.months?.some(m=>num(m.rainMm)!==null)).length+' have sourced precipitation. ';
