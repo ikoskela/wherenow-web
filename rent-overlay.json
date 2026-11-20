@@ -2530,6 +2530,56 @@
           "shortStayEligible": "unknown",
           "confidence": "moderate-low, contributors self-reported"
         }
+      },
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "Published advertised furnished units; no check of live vacancy, minimum stay unless explicit, identity, lease eligibility, internet speed, or total fees.",
+        "sourceType": "public_listing_advertisements",
+        "sampleSize": 3,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "Kennedy Norte furnished 1BR suite",
+            "neighborhood": "Kennedy Norte",
+            "usd": 320,
+            "bedrooms": 1,
+            "areaSqm": 30,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "furnished",
+            "included": "Internet advertised; air conditioning; kitchen equipped",
+            "deposit": "unknown",
+            "url": "https://www.plusvalia.com/propiedades/clasificado/alclapin-suite-amoblada-kennedy-norte-segundo-piso-elic-151161591.html",
+            "note": "Low-priced long-term-style advertisement; no confirmation of a 30-day stay."
+          },
+          {
+            "label": "Kennedy Norte furnished 1BR with parking",
+            "neighborhood": "Kennedy Norte",
+            "usd": 550,
+            "bedrooms": 1,
+            "areaSqm": 55,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "furnished",
+            "included": "Internet, water, building fee and parking advertised",
+            "deposit": "unknown",
+            "url": "https://www.plusvalia.com/alquiler/suite/guayas/guayaquil",
+            "note": "Published in furnished suite results; exact listing availability and duration unconfirmed."
+          },
+          {
+            "label": "Los Ceibos furnished 1BR — one-month rate",
+            "neighborhood": "Los Ceibos",
+            "usd": 700,
+            "bedrooms": 1,
+            "areaSqm": 60,
+            "stay": "one_month_explicit",
+            "furnishing": "furnished",
+            "included": "Water, electricity up to USD50 and Wi-Fi advertised for one-month price",
+            "deposit": "unknown",
+            "url": "https://www.plusvalia.com/alquiler/suite/guayas/guayaquil/q-ceibos",
+            "note": "One-month $700 listing observed in search index; primary results page could have rotated, availability and exact unit size not confirmed. Lower confidence than direct property page."
+          }
+        ]
       }
     },
     {
@@ -2620,6 +2670,56 @@
           "shortStayEligible": "unknown",
           "confidence": "moderate-low, contributors self-reported"
         }
+      },
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "Published advertised furnished units; no check of live vacancy, minimum stay unless explicit, identity, lease eligibility, internet speed, or total fees.",
+        "sourceType": "public_listing_advertisements",
+        "sampleSize": 3,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "La Carolina furnished studio — short-stay month",
+            "neighborhood": "La Carolina",
+            "usd": 800,
+            "bedrooms": 0,
+            "areaSqm": 40,
+            "stay": "one_month_explicit",
+            "furnishing": "furnished",
+            "included": "Short-stay monthly rate; building pool/gym/security advertised. Utilities and cleaning not confirmed",
+            "deposit": "unknown",
+            "url": "https://www.plusvalia.com/propiedades/clasificado/alclsuin-elegante-estudio-en-la-carolina-$630-opcion-149815940.html",
+            "note": "Listing distinguishes $630/month annual term from $800/month short-term; headline USD40 is nightly, not monthly."
+          },
+          {
+            "label": "La Carolina furnished 1BR apartment",
+            "neighborhood": "La Carolina",
+            "usd": 520,
+            "bedrooms": 1,
+            "areaSqm": 63,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "furnished",
+            "included": "Building fee and central gas; two-month refundable deposit listed; utilities and internet separately unknown",
+            "deposit": "two months",
+            "url": "https://www.plusvalia.com/alquiler/suite/pichincha/quito/con-amoblado",
+            "note": "Listed rent $520/month, no proof of one-month-only eligibility."
+          },
+          {
+            "label": "La Floresta furnished 2BR all-inclusive apartment",
+            "neighborhood": "La Floresta",
+            "usd": 750,
+            "bedrooms": 2,
+            "areaSqm": 80,
+            "stay": "monthly_rate_only_minimum_stay_unverified",
+            "furnishing": "furnished",
+            "included": "Water, electricity, internet and building fee advertised",
+            "deposit": "unknown",
+            "url": "https://www.plusvalia.com/propiedades/clasificado/alclapin-departamento-amoblado-en-renta-todo-incluido-la-90814282.html",
+            "note": "Page states $750/month in description and main price; another index displayed conflicting $650, so verify before relying on the rate."
+          }
+        ]
       }
     },
     {
