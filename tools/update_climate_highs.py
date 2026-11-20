@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Sequential NASA POWER climatology enrichment with per-city diagnostics.
-Processes all missing destinations per run, one request at a time, with per-city diagnostics.
+Processes one missing destination per invocation when CLIMATE_BATCH_SIZE=1; workflow commits each result.
 Only writes sourced values; persists failure diagnostics for follow-up runs.
 """
 import datetime,json,os,time,urllib.error,urllib.parse,urllib.request
