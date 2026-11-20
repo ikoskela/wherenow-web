@@ -2500,6 +2500,82 @@
           },
           "method": "Latest published monthly median monthly asking price meeting 10 average active listings. Already quoted in USD by TuLugar. Not a signed lease or standardized furnished rental."
         }
+      },
+      "furnishedRentalSamples": {
+        "researchDate": "2026-11-20",
+        "currency": "USD",
+        "scope": "Publicly advertised furnished housing in Cuenca; availability, deposit, final monthly price, WiFi performance, and actual lease acceptance not independently confirmed.",
+        "sourceType": "public_listing_advertisements",
+        "sampleSize": 5,
+        "shortStayPriceUsableForRanking": false,
+        "regularRentCapUnchanged": true,
+        "listings": [
+          {
+            "label": "Totoracocha completely furnished 1BR suite",
+            "neighborhood": "Totoracocha / Ciudadela UNE",
+            "usd": 350,
+            "bedrooms": 1,
+            "areaSqm": 25,
+            "stay": "one_month_explicit",
+            "furnishing": "furnished",
+            "included": "Electricity, water, internet and gas listed as included; motorcycle parking; no pets",
+            "deposit": "unknown",
+            "url": "https://casas.mitula.ec/casas/arriendo-suites-amueblados-cuenca",
+            "note": "Listing dated August 2026; advertiser says periods from one month; verify whether still active and exact address."
+          },
+          {
+            "label": "Lazareto furnished 1BR suite",
+            "neighborhood": "Lazareto",
+            "usd": 375,
+            "bedrooms": 1,
+            "areaSqm": 45,
+            "stay": "one_month_explicit",
+            "furnishing": "furnished",
+            "included": "Water, electricity and gas; covered parking",
+            "deposit": "unknown",
+            "url": "https://casas.mitula.ec/casas/arriendo-suites-amueblados-cuenca",
+            "note": "Advertiser explicitly offers stays from one month; internet not confirmed."
+          },
+          {
+            "label": "Furnished 1BR five blocks from Parque Calderón",
+            "neighborhood": "El Centro / Simón Bolívar",
+            "usd": 590,
+            "bedrooms": 1,
+            "areaSqm": 78,
+            "stay": "one_month_explicit",
+            "furnishing": "furnished",
+            "included": "Utilities, internet, building fee and washer-dryer",
+            "deposit": "required, amount unknown",
+            "url": "https://gringopost.com/669175/",
+            "note": "One-month minimum expressly stated. Advertised available from 2026-09-15; current vacancy unverified."
+          },
+          {
+            "label": "New Downtown Suite — Vado",
+            "neighborhood": "El Centro / Vado",
+            "usd": 540,
+            "bedrooms": 1,
+            "areaSqm": null,
+            "stay": "furnished_monthly_provider_price_dates_unverified",
+            "furnishing": "furnished",
+            "included": "Services, fees and minimum stay must be confirmed on chosen dates",
+            "deposit": "unknown",
+            "url": "https://expatsecuador.com/short-term-stays",
+            "note": "Monthly price on furnished-by-the-month platform. Exact 30-day dates and all-in amount unconfirmed."
+          },
+          {
+            "label": "One-bedroom Tomebamba / Otorongo",
+            "neighborhood": "El Centro / Tomebamba",
+            "usd": 700,
+            "bedrooms": 1,
+            "areaSqm": null,
+            "stay": "furnished_monthly_provider_price_dates_unverified",
+            "furnishing": "furnished",
+            "included": "Services, fees and minimum stay must be confirmed on chosen dates",
+            "deposit": "unknown",
+            "url": "https://expatsecuador.com/short-term-stays",
+            "note": "Several furnished one-bedroom units advertised at USD700 per month. Example, not a guaranteed quote."
+          }
+        ]
       }
     },
     {
