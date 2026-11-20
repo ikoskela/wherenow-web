@@ -1,55 +1,66 @@
 #!/usr/bin/env python3
-"""Enrich WhereNow with NASA POWER 1991–2020 monthly mean daily highs.
-NASA T2M_MAX_AVG is the mean of daily maxima; T2M_MAX is the extreme maximum.
-No personal records, credentials, or paid APIs. Failed lookups stay unknown.
+"""Sequential NASA POWER climatology enrichment with per-city diagnostics.
+Processes up to BATCH_SIZE missing destinations per run, one request at a time.
+Only writes sourced values; persists failure diagnostics for follow-up runs.
 """
-import json,urllib.request,urllib.parse,time,datetime,sys
-from concurrent.futures import ThreadPoolExecutor,as_completed
+import datetime,json,os,time,urllib.error,urllib.parse,urllib.request
 from pathlib import Path
-BASE='https://power.larc.nasa.gov/api/temporal/climatology/point' # NASA POWER source
-MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
-def get_highs(lat,lon):
- params={'parameters':'T2M_MAX_AVG','community':'RE','longitude':str(lon),'latitude':str(lat),'format':'JSON','start':'1991','end':'2020'}
+BASE='https://power.larc.nasa.gov/api/temporal/climatology/point'
+MONTHS=('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC')
+BATCH_SIZE=max(1,min(20,int(os.environ.get('CLIMATE_BATCH_SIZE','5'))))
+def valid(city):
+ m=city.get('months',[])
+ return len(m)==12 and all(isinstance(v.get('highC'),(int,float)) and -75<v['highC']<65 for v in m)
+def fetch(city):
+ params={'parameters':'T2M_MAX_AVG','community':'RE','longitude':city['lon'],'latitude':city['lat'],'format':'JSON','start':'1991','end':'2020'}
  url=BASE+'?'+urllib.parse.urlencode(params)
- for attempt in range(3):
-  try:
-   with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'WhereNow-climate-audit/1.0'}),timeout=35) as r: raw=json.load(r)
-   vals=raw['properties']['parameter']['T2M_MAX_AVG']
-   result=[vals.get(m) for m in MONTHS]
-   if len(result)!=12 or not all(isinstance(v,(int,float)) and -75<v<65 for v in result):raise ValueError('missing or implausible climate data')
-   return [round(v,1) for v in result],url
-  except Exception as exc:
-   if attempt==2:raise
-   time.sleep(2**attempt)
+ req=urllib.request.Request(url,headers={'User-Agent':'WhereNowClimate/1.1 (public-source-enrichment)','Accept':'application/json'})
+ try:
+  with urllib.request.urlopen(req,timeout=45) as response:
+   status=response.status
+   raw=json.load(response)
+  series=raw['properties']['parameter']['T2M_MAX_AVG']
+  values=[series.get(k) for k in MONTHS]
+  if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and -75<v<65 for v in values):
+   return None,{'status':status,'reason':'missing_or_invalid_months','keys':list(series)[:20]}
+  return ([round(v,1) for v in values],url),None
+ except urllib.error.HTTPError as e:
+  return None,{'status':e.code,'reason':'http_error','response':e.read(500).decode('utf-8','replace')}
+ except Exception as e:
+  return None,{'status':None,'reason':type(e).__name__,'detail':str(e)[:300]}
 def main():
- p=Path('data.json');raw=json.loads(p.read_text());cities=raw if isinstance(raw,list) else raw['locations']
- assert len(cities)==208,'Unexpected destination count; review before publishing'
- successes=0;errors=[]
- def lookup(item):
-  i,c=item
-  if not isinstance(c.get('lat'),(int,float)) or not isinstance(c.get('lon'),(int,float)):
-   return i,None,'missing coordinates'
-  try:
-   highs,url=get_highs(c['lat'],c['lon'])
-   return i,(highs,url),None
-  except Exception as e:return i,None,str(e)[:180]
- with ThreadPoolExecutor(max_workers=4) as pool:
-  futures=[pool.submit(lookup,item) for item in enumerate(cities) if not (len(item[1].get('months',[]))==12 and all(isinstance(m.get('highC'),(int,float)) and -75<m['highC']<65 for m in item[1]['months']))]
-  for n,f in enumerate(as_completed(futures),1):
-   i,result,error=f.result();c=cities[i]
-   if result:
-    highs,url=result
-    for m,v in zip(c.get('months',[]),highs):m['highC']=v
-    c['highTempSource']=url
-    c['highTempNote']='NASA POWER MERRA-2 1991–2020 climatology: T2M_MAX_AVG, mean daily maximum temperature (°C); gridded model estimate, not station observations or forecast.'
-    successes+=1
-   else:errors.append(c.get('id','unknown')+': '+error)
-   if n%25==0:print('processed',n,'of',len(cities),'success',successes,flush=True)
- # Preserve all existing verified highs; never replace failures with estimates.
- print('requested missing destinations:',len(futures),'successful:',successes,'failed:',len(errors),flush=True)
- if successes==0 and futures:
-  raise RuntimeError('No successful NASA POWER requests; no file changed. First errors: '+repr(errors[:4]))
- p.write_text(json.dumps(raw,ensure_ascii=False,separators=(',',':'))+chr(10))
- print(json.dumps({'locations':len(cities),'updated':successes,'complete':sum(len(c.get('months',[]))==12 and all(isinstance(m.get('highC'),(int,float)) for m in c['months']) for c in cities),'unavailable':len(errors),'errors':errors}))
-
+ path=Path('data.json');cities=json.loads(path.read_text(encoding='utf-8'))
+ assert isinstance(cities,list) and len(cities)==208,'Unexpected destination dataset'
+ logpath=Path('climate-import-status.json')
+ log=json.loads(logpath.read_text()) if logpath.exists() else {'failures':{},'lastAttempt':None}
+ failures=log.setdefault('failures',{})
+ missing=[c for c in cities if not valid(c)]
+ # Prefer untried cities; retry known failures only after other cities have been attempted.
+ missing.sort(key=lambda c:(failures.get(c['id'],{}).get('attempts',0),c['id']))
+ success=0
+ for city in missing[:BATCH_SIZE]:
+  now=datetime.datetime.now(datetime.timezone.utc).isoformat()
+  if not isinstance(city.get('lat'),(int,float)) or not isinstance(city.get('lon'),(int,float)):
+   result=None;error={'reason':'missing_coordinates'}
+  else:result,error=fetch(city)
+  if result:
+   values,url=result
+   for month,value in zip(city['months'],values):month['highC']=value
+   city['highTempSource']=url
+   city['highTempNote']='NASA POWER 1991–2020 T2M_MAX_AVG gridded climatology; monthly average of daily maxima, not a forecast.'
+   failures.pop(city['id'],None);success+=1
+   print('SUCCESS',city['id'],values,flush=True)
+  else:
+   prev=failures.get(city['id'],{})
+   failures[city['id']]={'attempts':prev.get('attempts',0)+1,'lastAttempt':now,'error':error}
+   print('FAILED',city['id'],json.dumps(error),flush=True)
+  time.sleep(1)
+ log['lastAttempt']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ log['complete']=sum(valid(c) for c in cities)
+ log['total']=len(cities)
+ log['lastBatch']={'requested':min(BATCH_SIZE,len(missing)),'success':success}
+ # Valid JSON and atomic replacement, even when some cities fail.
+ tmp=path.with_suffix('.json.tmp');tmp.write_text(json.dumps(cities,ensure_ascii=False,separators=(',',':'))+chr(10));tmp.replace(path)
+ tmp=logpath.with_suffix('.json.tmp');tmp.write_text(json.dumps(log,ensure_ascii=False,indent=2)+chr(10));tmp.replace(logpath)
+ print('SUMMARY',json.dumps({'complete':log['complete'],'remaining':len(cities)-log['complete'],'batch':log['lastBatch']}),flush=True)
 if __name__=='__main__':main()
