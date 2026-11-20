@@ -121,7 +121,7 @@ function monthlyCosts(x,edit){
  const cost=localTotal??(hasLocalPart?sum:amount(x.costUsd??x.cost)??sum);
  return {rent,other,cost};
 }
-function score(x){const [,m]=bounds();const mon=x.months?.[m]||{}, edit=overrides[x.id]||{};const utc=zoneOffset(x.tz), ref=refOffset(), gap=num($('gap').value);const d=utc===null||ref===null?null:Math.min(Math.abs(utc-ref),24-Math.abs(utc-ref));const t=num(mon.tempC??mon.temp),rain=num(mon.rainMm??mon.rain),{rent,other,cost}=monthlyCosts(x,edit),mos=labelLevel(edit.mosquito??mon.mosquito??x.mosquito),social=labelLevel(edit.social??x.social)??({quiet:1,social:2,lively:3}[x.social]??null),key=routeKey(x),fare=key?num(quotes[key]):null; const checks=[];
+function score(x){const [,m]=bounds();const mon=x.months?.[m]||{}, edit=overrides[x.id]||{};const utc=zoneOffset(x.tz), ref=refOffset(), gap=num($('gap').value);const d=utc===null||ref===null?null:Math.abs(utc-ref);const t=num(mon.tempC??mon.temp),rain=num(mon.rainMm??mon.rain),{rent,other,cost}=monthlyCosts(x,edit),mos=labelLevel(edit.mosquito??mon.mosquito??x.mosquito),social=labelLevel(edit.social??x.social)??({quiet:1,social:2,lively:3}[x.social]??null),key=routeKey(x),fare=key?num(quotes[key]):null; const checks=[];
 function upper(name,v,max,near,text){if(max!==null)checks.push({name:tr(name),status:v===null?'unknown':v<=max?'fit':v<=max+near?'near':'miss',text:tr(text)});}
 upper('Time difference',d,ref!==null?gap:null,1,d===null?'Unknown':d+' h');
 const min=num($('minTemp').value),max=num($('maxTemp').value);
