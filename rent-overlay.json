@@ -3,15 +3,15 @@
   "publicationAllowed": true,
   "attribution": "WhereNow rent overlay. Sources include Fuente: TuLugar (tulugar.com), Aptologia, Aguila Inmobiliaria, IDECBA, IBGE PNAD Contínua, Homes Victoria, Singapore HDB, government statistical agencies and Nostos, all identified per datum with methodological distinctions. USD exchange sources attributed where applied. Mixed, paid, and segment-specific benchmarks do not enter the one-bedroom rent cap. Additional city-level asking-rent publications, official surveys and signed contracts are credited individually. One-room, small-unit, housing-wide and historical bands do not qualify as comparable one-bedroom rents. The additional records credit PhilRoom, INEC Ecuador, Eurostat and EstateIQ (estateiq.ae); changes and currency conversions are noted per record. This release credits Kenya Property Centre (CC BY 4.0) and REGA via Kite (Saudi Open Data License v2.0); the Jeddah contract index is display-only. Added individual Costa Rica asking-price examples with broker attribution; examples do not enter the rent cap. Selected district rent statistics are cited from Medio under its attribution terms, and are not used for cap scoring.",
   "sourceUrl": "https://nostos.navoy.io/data/nomad-cities-2026.json",
-  "generatedAt": "2026-11-20",
+  "generatedAt": "2026-11-21",
   "coverage": {
     "destinationCount": 216,
-    "withPublishedRentReference": 66,
-    "withoutPublishedRentReference": 150,
+    "withPublishedRentReference": 67,
+    "withoutPublishedRentReference": 149,
     "withPublishedMonthlyTotal": 0,
     "withOtherComparableBenchmarksOnly": 67,
-    "withAnyPublishedRentBenchmark": 133,
-    "withNoPublishedRentBenchmark": 83
+    "withAnyPublishedRentBenchmark": 134,
+    "withNoPublishedRentBenchmark": 82
   },
   "records": [
     {
@@ -4285,6 +4285,33 @@
             "localPerUsd": 12.09,
             "sourceUrl": "https://hogaria.com/propiedades/en-alquiler/santa-cruz-de-la-sierra/departamentos"
           }
+        }
+      }
+    },
+    {
+      "id": "argentina-cordoba",
+      "status": "matched",
+      "rent": {
+        "rentTypical1brUsd": {
+          "usd": 412.66,
+          "asOf": "2026-10-18",
+          "sourceId": "Aptología / Daniel Mauricio Pinzón Pineda · one-bedroom apartment asking-rent median",
+          "sourceUrl": "https://elbroker.github.io/aptologia-estudios-web/alquiler-por-numero-de-dormitorios-cordoba-2026/",
+          "kind": "one_bedroom_apartment_asking_median_not_furnished_quote",
+          "listingCount": 96,
+          "scope": "Córdoba city; apartments only; ordinary asking rents",
+          "localCurrency": "ARS",
+          "localMedian": 625000,
+          "localP25": 565000,
+          "localP75": 750000,
+          "exchangeRateARSPerUSD": 1514.57,
+          "exchangeRateDate": "2026-10-18",
+          "studyDoi": "https://doi.org/10.5281/zenodo.23512742",
+          "license": {
+            "name": "CC BY 4.0",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          "method": "Apartment listing median; WhereNow converted to USD using the study's October 18 exchange rate. Common fees excluded. Portal listings skew toward middle and higher segments. Not a signed lease or furnished monthly quote."
         }
       }
     }
