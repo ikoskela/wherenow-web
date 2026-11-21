@@ -6,10 +6,10 @@
   "generatedAt": "2026-11-21",
   "coverage": {
     "destinationCount": 216,
-    "withPublishedRentReference": 67,
-    "withoutPublishedRentReference": 149,
+    "withPublishedRentReference": 68,
+    "withoutPublishedRentReference": 148,
     "withPublishedMonthlyTotal": 0,
-    "withOtherComparableBenchmarksOnly": 67,
+    "withOtherComparableBenchmarksOnly": 66,
     "withAnyPublishedRentBenchmark": 134,
     "withNoPublishedRentBenchmark": 82
   },
@@ -767,6 +767,27 @@
             "name": "CC BY 4.0",
             "url": "https://creativecommons.org/licenses/by/4.0/"
           }
+        },
+        "rentTypical1brUsd": {
+          "usd": 590,
+          "asOf": "2026-10-18",
+          "sourceId": "Aptología / Daniel Mauricio Pinzón Pineda · one-bedroom apartment asking-rent median",
+          "sourceUrl": "https://elbroker.github.io/aptologia-pt/estudo/alugueis-de-apartamentos-de-1-quarto-em-sao-paulo-brasil-outubro-de-2026/",
+          "kind": "one_bedroom_apartment_asking_median_not_furnished_quote",
+          "listingCount": 3185,
+          "scope": "São Paulo city; active unique one-bedroom apartment advertisements",
+          "localCurrency": "BRL",
+          "localMedian": 3000,
+          "localP25": 2160,
+          "localP75": 4500,
+          "exchangeRateBRLPerUSD": 5.09,
+          "exchangeRateDate": "2026-10-18",
+          "fxSourceUrl": "https://elbroker.github.io/aptologia-estudios-web/cuanto-cuesta-una-habitacion-extra-arriendo-capitales-latinoamerica-2026/",
+          "license": {
+            "name": "CC BY 4.0",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          "method": "Publisher's rounded USD reference for monthly asking rent. Condo fees separate. Not a signed lease, furnished quote, or date-specific availability."
         }
       }
     },
